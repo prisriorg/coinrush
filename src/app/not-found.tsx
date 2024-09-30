@@ -14,9 +14,9 @@ export default function NotFound() {
           <h1 className="next-error-h1" style={styles.h1}>
             404
           </h1>
-          <div style={styles.desc}>
+          {/* <div style={styles.desc}>
             <h2 style={styles.h2}>This page could not be found.</h2>
-          </div>
+          </div> */}
         </div>
       </div>
     </>
