@@ -12,8 +12,7 @@
     "prod": "wrangler d1 migrations apply coinrush --remote",
     "pages:build": "npx @cloudflare/next-on-pages",
     "preview": "npm run pages:build && wrangler pages dev",
-    "deploy": "npm run pages:build && wrangler pages deploy",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv env.d.ts"
+    "deploy": "npm run pages:build && npx wrangler pages deploy --branch production"
   },
   "dependencies": {
     "@next/env": "^14.2.13",

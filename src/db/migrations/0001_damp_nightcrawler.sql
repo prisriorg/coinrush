@@ -1,0 +1,1 @@
+ALTER TABLE `withdwaral` ADD `status` integer;
