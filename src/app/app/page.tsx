@@ -137,7 +137,7 @@ export default function Home() {
         return null;
     }
   };
-  if (!user) {
+  if (user && user.length === 0) {
     return (
       <>
         <div style={styles.error}>
@@ -151,7 +151,7 @@ export default function Home() {
     );
   }
   return (
-    <AppRoot appearance="dark" platform="base" className="bg-black">
+    <AppRoot appearance="dark" platform="base" >
       <div className="pb-24 text-white">
         <div className=" min-h-screen m-4">{renderContent()}</div>
         <Tabbar className="bg-black">

@@ -6,7 +6,15 @@ pages_build_output_dir = ".vercel/output/static"
 # [vars]
 # MY_VARIABLE = "production_value"
 [[d1_databases]]
+migrations_dir = "./src/db/migrations"
 binding = "DB"
 database_name = "coinrush"
 database_id = "7b1fcee4-03f9-43e5-a6c4-a0bc1d825fa5"
-migrations_dir = "./src/db/migrations"
+
+[env.preview]
+name = "preview"
+[[env.preview.d1_databases]]
+migrations_dir = "./db/migrations"
+binding = "DB"
+database_name = "coinrush"
+database_id = "7b1fcee4-03f9-43e5-a6c4-a0bc1d825fa5"

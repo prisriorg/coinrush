@@ -11,8 +11,9 @@
     "local": "wrangler d1 migrations apply coinrush --local",
     "prod": "wrangler d1 migrations apply coinrush --remote",
     "pages:build": "npx @cloudflare/next-on-pages",
-    "preview": "npm run pages:build && wrangler pages dev",
-    "deploy": "npm run pages:build && npx wrangler pages deploy --branch production"
+    "pages:dev": "npm run pages:build && npx wrangler pages dev",
+    "pages:deploy:preview": "npm pages:build && npx wrangler pages deploy --branch preview",
+    "deploy": "npm run pages:build && npx wrangler pages deploy"
   },
   "dependencies": {
     "@next/env": "^14.2.13",

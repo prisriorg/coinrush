@@ -1,5 +1,4 @@
 "use client";
-import CoinIcon from "@/icons/CoinIcon";
 import React, { useState } from "react";
 
 const InviteFriends = (props: {
@@ -48,12 +47,10 @@ const InviteFriends = (props: {
         />
         <div className="mt-2 flex gap-2">
           <button
-            className={
-              "bg-blue-500 hover:bg-blue-600 active:scale-95 transition-transform duration-150 ease-in-out px-4 py-2 rounded-full shadow-md"
-            }
+            className={`bg-blue-500 hover:bg-blue-600 active:scale-95 transition-transform duration-150 ease-in-out px-4 py-2 rounded-full shadow-md`}
             onClick={handleCopy}
           >
-            Copy Link
+            {copySuccess ? "Link copied!" : "Copy Link"}
           </button>
           <button
             className={
@@ -64,14 +61,14 @@ const InviteFriends = (props: {
             Share
           </button>
         </div>
-        {copySuccess && <p className="text-green-400 mt-2">Link copied!</p>}
+        <p className="mt-2 text-gray-400 text-sm text-center">
+          Share your unique referral link with your friends. For every friend
+          who signs up using your link, you will earn rewards based on their
+          activity.
+        </p>
       </div>
 
       {/* <h2 className="text-2xl font-bold text-white mt-8">How the Referral System Works</h2> */}
-      <p className="mt-2 text-gray-400 text-sm text-center">
-        Share your unique referral link with your friends. For every friend who
-        signs up using your link, you will earn rewards based on their activity.
-      </p>
 
       <div className="mt-4 w-full max-w-md bg-gray-800 p-6 rounded-lg shadow-lg">
         <h2 className="text-xl font-bold text-blue-400 mb-4">

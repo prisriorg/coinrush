@@ -138,6 +138,22 @@ export const withdwaral = sqliteTable('withdwaral', {
 export type Withdwaral = typeof withdwaral.$inferSelect
 export type InsertWithdwaral = typeof withdwaral.$inferInsert
 
+
+export const requests = sqliteTable('requests', {
+  id: integer('id').primaryKey(),
+  month: text('month'),
+  request: integer('request'),
+  createdAt: text("created_at")
+    .default(sql`(CURRENT_TIMESTAMP)`)
+    .notNull(),
+  updateAt: integer("updated_at", { mode: "timestamp" }).$onUpdate(
+    () => new Date()
+  ),
+})
+
+export type Requests = typeof requests.$inferSelect
+export type InsertRequests = typeof requests.$inferInsert
+
 export const plans = sqliteTable('plans', {
   id: integer('id').primaryKey(),
   requests: integer('requests').default(0),

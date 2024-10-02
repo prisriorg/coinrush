@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "@/app/globals.css";
+import { Root } from "@/components/TgRoot";
 
 export const metadata: Metadata = {
   title: "CoinRush",
@@ -13,7 +14,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+      <Root>{children}</Root></body>
     </html>
   );
 }

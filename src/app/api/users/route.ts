@@ -6,20 +6,21 @@ export const runtime = "edge";
 
 export async function GET(request: NextRequest) {
   // Validate token and chat_id here. If invalid, return error response.
-  return Response.json("");
+  return Response.json({});
 }
 
 export async function POST(request: NextRequest) {
   const response: {
     id: number;
     username: string;
-    name: string;
+    last_name: string;
+    first_name: string;
     start_param: number;
   } = await request.json();
   var chat_id: number = response.id || 0;
   var refer_id: number = response.start_param || 0;
-  var username: string = response.username || "";
-  var name: string = response.name || "";
+  var username: string = response.username;
+  var name: string = response.first_name ? response.first_name+" "+response.last_name : "";
   // Validate token and chat_id here. If invalid, return error response.
   if (!chat_id) {
     return NextResponse.json({ error: "Invalid response" }, { status: 400 });
@@ -32,13 +33,20 @@ export async function POST(request: NextRequest) {
     if (usersExist.length > 0) {
       return NextResponse.json(usersExist[0]);
     }
-    // const chat = await db.insert(users).values({
-    //   chatId: chat_id,
-    //   username: username,
-    //   refer: refer_id,
-    //   name: name,
-    // });
-    // return NextResponse.json({ chat_id: response.id });
+    const chat = await db.insert(users).values({
+      chatId: chat_id,
+      username: username,
+      refer: refer_id,
+      name: name,
+    });
+    const usersExist2 = await db
+      .select()
+      .from(users)
+      .where(eq(users.chatId, chat_id))
+      if (usersExist.length > 0) {
+        return NextResponse.json(usersExist2[0]);
+      }
+      return NextResponse.json("ok");
   } catch (err: any) {
     return NextResponse.json({ error: "An error occurred" }, { status: 500 });
   }

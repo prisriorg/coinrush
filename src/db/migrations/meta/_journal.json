@@ -15,6 +15,13 @@
       "when": 1727749731321,
       "tag": "0001_damp_nightcrawler",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1727757159135,
+      "tag": "0002_strong_pretty_boy",
+      "breakpoints": true
     }
   ]
 }

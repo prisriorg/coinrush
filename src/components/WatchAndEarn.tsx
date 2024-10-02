@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import YoutubeIcon from "@/icons/YoutubeIcon";
 import SubmitCheckIcon from "@/icons/SubmitCheckIcon";
-// import WalletIcon from "../icons/WalletIcon";
+import Loading from "./Loading";
 
 const WatchAndEarn = (props: { id: string }) => {
   const [videoList, setVideoList] = useState<any[]>();
@@ -31,7 +31,7 @@ const WatchAndEarn = (props: { id: string }) => {
       .catch((error) => {
         console.error("Error fetching history:", error);
       });
-  }, []);
+  }, [props.id]);
 
   const selectVideo = (videoId: number) => {
     if (selectedVideoId === videoId) {
@@ -88,122 +88,145 @@ const WatchAndEarn = (props: { id: string }) => {
           Games
         </button>
       </div>
-
       {selectedIs === "games" ? (
         <div className="w-full max-w-md">
-          <div className="grid grid-cols-2 gap-4">
-            {gamesData?.length === 0 ? (
-              <div className="flex justify-center items-center"> No More Task </div>
-            ) : gamesData?.map((game) => (
-              <a
-                key={game.id}
-                href={game.name}
-                className="bg-gray-800 p-2 rounded-lg shadow-md flex flex-col items-center transition-transform transform hover:scale-105 hover:shadow-xl relative overflow-hidden"
-              >
-                <img
-                  src={game.image}
-                  alt={game.name}
-                  className="w-full h-32 object-cover rounded-md mb-2 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 transition-opacity duration-300 hover:opacity-100"></div>
-                <h4 className="text-lg font-bold z-10">{game.name}</h4>
-                <p className="text-gray-400 text-center z-10">
-                  {game.description}
-                </p>
-              </a>
-            ))}
-          </div>
+          {loading ? (
+            <Loading />
+          ) : (
+            <div className="grid grid-cols-2 gap-4">
+              {gamesData?.length === 0 ? (
+                <div className="flex justify-center items-center">
+                  {" "}
+                  No More Task{" "}
+                </div>
+              ) : (
+                gamesData?.map((game) => (
+                  <a
+                    key={game.id}
+                    href={game.name}
+                    className="bg-gray-800 p-2 rounded-lg shadow-md flex flex-col items-center transition-transform transform hover:scale-105 hover:shadow-xl relative overflow-hidden"
+                  >
+                    <img
+                      src={game.image}
+                      alt={game.name}
+                      className="w-full h-32 object-cover rounded-md mb-2 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 transition-opacity duration-300 hover:opacity-100"></div>
+                    <h4 className="text-lg font-bold z-10">{game.name}</h4>
+                    <p className="text-gray-400 text-center z-10">
+                      {game.description}
+                    </p>
+                  </a>
+                ))
+              )}
+            </div>
+          )}
         </div>
       ) : selectedIs === "video" ? (
         <div className="w-full max-w-md">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {videoList?.length === 0 ? (
-              <div className="flex justify-center items-center"> No More Task </div>
-            ) : videoList?.map((video) => (
-              <div
-                key={video.id}
-                className="bg-gray-800 p-4 rounded-lg shadow-md flex flex-col items-center transition-transform transform hover:scale-105 hover:shadow-xl relative overflow-hidden"
-              >
-                <h2 className="text-lg font-semibold text-gray-100 mb-2">
-                  {video.title}
-                </h2>
-                <a
-                  href={`${video.videoId}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg mb-4"
-                >
-                  <YoutubeIcon /> Open Video
-                </a>
+          {loading ? (
+            <Loading />
+          ) : (
+            <div className="grid grid-cols-1  gap-4">
+              {videoList?.length === 0 ? (
+                <div className="flex justify-center items-center">
+                  No More Task
+                </div>
+              ) : (
+                videoList?.map((video) => (
+                  <div
+                    key={video.id}
+                    className="bg-gray-800 p-4 rounded-lg shadow-md flex flex-col items-center transition-transform transform hover:scale-105 hover:shadow-xl relative overflow-hidden"
+                  >
+                    <h2 className="text-lg font-semibold text-gray-100 mb-2">
+                      {video.title}
+                    </h2>
+                    <a
+                      href={`${video.videoId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg mb-4"
+                    >
+                      <YoutubeIcon /> Open Video
+                    </a>
 
-                {selectedVideoId === video.id && (
-                  <div className="mt-4 w-full">
-                    <div className="mb-4">
-                      <label
-                        htmlFor={`code-${video.id}`}
-                        className="block mb-2 text-gray-300"
-                      >
-                        Enter Code from the Video:
-                      </label>
-                      <input
-                        type="text"
-                        id={`code-${video.id}`}
-                        value={enteredCode}
-                        onChange={(e) => setEnteredCode(e.target.value)}
-                        className="w-full p-3 bg-gray-700 text-white rounded-lg shadow-md  focus:border-transparent focus:outline-none"
-                        placeholder="Enter code here..."
-                      />
-                    </div>
+                    {selectedVideoId === video.id && (
+                      <div className="mt-4 w-full">
+                        <div className="mb-4">
+                          <label
+                            htmlFor={`code-${video.id}`}
+                            className="block mb-2 text-gray-300"
+                          >
+                            Enter Code from the Video:
+                          </label>
+                          <input
+                            type="text"
+                            id={`code-${video.id}`}
+                            value={enteredCode}
+                            onChange={(e) => setEnteredCode(e.target.value)}
+                            className="w-full p-3 bg-gray-700 text-white rounded-lg shadow-md  focus:border-transparent focus:outline-none"
+                            placeholder="Enter code here..."
+                          />
+                        </div>
 
-                    {error && <p className="text-red-500 mb-4">{error}</p>}
+                        {error && <p className="text-red-500 mb-4">{error}</p>}
+
+                        <button
+                          onClick={() => handleSubmitCode(video)}
+                          className="flex items-center justify-center bg-green-500 hover:bg-green-600 active:scale-95 transition-transform duration-150 ease-in-out text-white font-bold py-2 px-4 rounded-lg w-full"
+                        >
+                          <SubmitCheckIcon /> Submit Code
+                        </button>
+                      </div>
+                    )}
 
                     <button
-                      onClick={() => handleSubmitCode(video)}
-                      className="flex items-center justify-center bg-green-500 hover:bg-green-600 active:scale-95 transition-transform duration-150 ease-in-out text-white font-bold py-2 px-4 rounded-lg w-full"
+                      onClick={() => selectVideo(video.id)}
+                      className="mt-4 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg w-full"
                     >
-                      <SubmitCheckIcon /> Submit Code
+                      {selectedVideoId === video.id
+                        ? "Hide Code Entry"
+                        : "Enter Code to Earn"}
                     </button>
                   </div>
-                )}
-
-                <button
-                  onClick={() => selectVideo(video.id)}
-                  className="mt-4 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg w-full"
-                >
-                  {selectedVideoId === video.id
-                    ? "Hide Code Entry"
-                    : "Enter Code to Earn"}
-                </button>
-              </div>
-            ))}
-          </div>
+                ))
+              )}
+            </div>
+          )}
         </div>
       ) : selectedIs === "task" ? (
         <div className="w-full max-w-md">
-          <div className="grid grid-cols-2 gap-4">
-            {gamesData?.length === 0 ? (
-              <div className="w-full flex justify-center items-center"> No More Task </div>
-            ) : (
-              gamesData?.map((game) => (
-                <a
-                  key={game.id}
-                  href={game.name}
-                  className="bg-gray-800 p-2 rounded-lg shadow-md flex flex-col items-center transition-transform transform hover:scale-105 hover:shadow-xl relative overflow-hidden"
-                >
-                  <img
-                    src={game.image}
-                    alt={game.name}
-                    className="w-full h-32 object-cover rounded-md mb-2 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 transition-opacity duration-300 hover:opacity-100"></div>
-                  <h4 className="text-lg font-bold z-10">{game.name}</h4>
-                  <p className="text-gray-400 text-center z-10">
-                    {game.description}
-                  </p>
-                </a>
-              ))
-            )}
-          </div>
+          {loading ? (
+            <Loading />
+          ) : (
+            <div className="grid grid-cols-1">
+              {gamesData?.length === 0 ? (
+                <div className="w-full flex justify-center items-center">
+                  {" "}
+                  No More Task{" "}
+                </div>
+              ) : (
+                gamesData?.map((game) => (
+                  <a
+                    key={game.id}
+                    href={game.name}
+                    className="bg-gray-800 p-2 rounded-lg shadow-md flex flex-col items-center transition-transform transform hover:scale-105 hover:shadow-xl relative overflow-hidden"
+                  >
+                    <img
+                      src={game.image}
+                      alt={game.name}
+                      className="w-full h-32 object-cover rounded-md mb-2 transition-transform duration-300"
+                    />
+                    <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 transition-opacity duration-300 hover:opacity-100"></div>
+                    <h4 className="text-lg font-bold z-10">{game.name}</h4>
+                    <p className="text-gray-400 text-center z-10">
+                      {game.description}
+                    </p>
+                  </a>
+                ))
+              )}
+            </div>
+          )}
         </div>
       ) : (
         <></>

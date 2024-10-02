@@ -15,10 +15,28 @@
     --background-end-rgb: 0, 0, 0;
   }
 } */
-
+/* body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("/CoinRuss.jpg");
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+  z-index: -1;
+  opacity: 0.8; 
+} */
 body {
   color: white;
-  background-color: black;
+  background-image: url("/CoinRuss.jpg");
+  background-size: cover;
+  /* filter: blur(8px);
+  -webkit-filter: blur(8px); */
+  /* background-color: black; */
   /* background: linear-gradient(
       to bottom,
       transparent,
