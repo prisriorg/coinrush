@@ -14,12 +14,12 @@ const SaveToken: React.FC<ProtectedRouteProps> = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
     if (!token) {
-      setToken(true);
-      // router.push('/admin/login');
+      setToken(false);
+      router.push('/admin/login');
     }else{
       setToken(true);
     }
-  }, [router]);
+  }, []);
 
   return <>{token?children:<Loading/>}</>;
 };

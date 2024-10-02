@@ -1,3 +1,5 @@
+import { db } from "@/db";
+import { plans } from "@/db/schema";
 import { NextResponse, type NextRequest } from "next/server";
 export const runtime = "edge";
 
@@ -6,24 +8,14 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  return NextResponse.json({data:[
-    {
-      id: 1,
-      name: "Basic Plan",
-      price: 9,
-      traffic: "10k/month",
-    },
-    {
-      id: 2,
-      name: "Standard Plan",
-      price: 17,
-      traffic: "50k/month",
-    },
-    {
-      id: 3,
-      name: "Premium Plan",
-      price: 50,
-      traffic: "Unlimited",
-    },
-  ]});
+  const plan = await db
+    .select({
+      id: plans.id,
+      price: plans.price,
+      traffic: plans.requests,
+    })
+    .from(plans);
+  return NextResponse.json({
+    data: plan
+  });
 }

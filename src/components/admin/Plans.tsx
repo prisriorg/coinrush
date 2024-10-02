@@ -11,7 +11,7 @@ const SelectPlan: React.FC = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ chat_id: parseInt("654645") }),
+      body: JSON.stringify({ token: parseInt("654645") }),
     })
       .then((response) => response.json())
       .then((data: any) => {
@@ -40,13 +40,13 @@ const SelectPlan: React.FC = () => {
                   key={plan.id}
                   className="bg-gray-800 p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105"
                 >
-                  <h2 className="text-xl font-bold mb-4">{plan.name}</h2>
+                  <h2 className="text-xl font-bold mb-4">Plan {plan.id}</h2>
                   <p className="text-lg font-semibold mb-4">
                     ${plan.price.toFixed(2)} / month
                   </p>
                   <p className="text-lg mb-4">Traffic: {plan.traffic}</p>
                   <button className={`w-full ${selectedPlan==plan.id?'bg-green-600':'bg-blue-600 hover:bg-blue-500'}  text-white font-semibold py-2 rounded`}>
-                  {selectedPlan===plan.id?'Activated':"Select "+plan.name} 
+                  {selectedPlan===plan.id?'Activated':"Chamge to Plan "+plan.id} 
                   </button>
                 </div>
               ))}
