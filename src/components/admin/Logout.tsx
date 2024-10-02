@@ -8,7 +8,7 @@ const Logout = () => {
   
   useEffect(() => {
     localStorage.removeItem("accessToken");
-    router.replace("/user/login");
+    router.replace("/admin/login");
   }, [router]);
   
   return loading ? (

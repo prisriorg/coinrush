@@ -101,7 +101,7 @@ const Header = ({ activeLink }: { activeLink: string }) => {
                 {index > 2 ? (
                    <Link
                    href={item.link}
-                   className={`relative overflow-hidden flex items-center p-2 text-gray-900 rounded-lg text-white hover:bg-gray-700 group ${
+                   className={`relative overflow-hidden flex items-center p-2 rounded-lg text-white hover:bg-gray-700 group ${
                      item.link === activeLink ? "bg-gray-700" : ""
                    } ripple-effect`} // Added "relative overflow-hidden" and "ripple-effect"
                  >
