@@ -8,30 +8,30 @@ const UserList: React.FC = () => {
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 20;
-// Handle pagination
-const addData = (page:number) => {
-  setLoading(true);
-  fetch("/api/admin/users", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      token: "",
-      pageSize: totalPages,
-      page,
-    }),
-  })
-    .then((response) => response.json())
-    .then((data: any) => {
-      setLoading(false);
-      setUsersData([])
-      setUsersData(data.data);
+  // Handle pagination
+  const addData = (page: number) => {
+    setLoading(true);
+    fetch("/api/admin/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token: "",
+        pageSize: totalPages,
+        page,
+      }),
     })
-    .catch((error) => {
-      console.error("Error fetching history:", error);
-    });
-};
+      .then((response) => response.json())
+      .then((data: any) => {
+        setLoading(false);
+        setUsersData([]);
+        setUsersData(data.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching history:", error);
+      });
+  };
 
   useEffect(() => {
     addData(currentPage);
@@ -94,9 +94,7 @@ const addData = (page:number) => {
             Previous
           </button>
 
-          <span className="text-gray-400">
-            Page {currentPage}
-          </span>
+          <span className="text-gray-400">Page {currentPage}</span>
 
           <button
             onClick={handleNextPage}

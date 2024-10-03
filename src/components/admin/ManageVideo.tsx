@@ -8,16 +8,16 @@ interface Task {
   description: string;
 }
 
-const ManageTasks: React.FC = () => {
+const ManageVideo: React.FC = () => {
   // Mock task data
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [videos, setVideos] = useState<Task[]>([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     addData();
   }, []);
   const addData = () => {
     setLoading(true);
-    fetch("/api/admin/manage-task", {
+    fetch("/api/admin/manage-videos", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -29,7 +29,7 @@ const ManageTasks: React.FC = () => {
       .then((response) => response.json())
       .then((data: any) => {
         setLoading(false);
-        setTasks(data.data);
+        setVideos(data.data);
       })
       .catch((error) => {
         console.error("Error fetching history:", error);
@@ -37,13 +37,13 @@ const ManageTasks: React.FC = () => {
   };
   // Function to handle deleting a task
   const handleDelete = (id: number) => {
-    const updatedTasks = tasks.filter((task) => task.id !== id);
-    setTasks(updatedTasks);
+    const updatedTasks = videos.filter((task) => task.id !== id);
+    setVideos(updatedTasks);
   };
 
   // Function to handle editing a task (mocked)
   const handleEdit = (id: number) => {
-    const updatedTasks = tasks.map((task) => {
+    const updatedTasks = videos.map((task) => {
       if (task.id === id) {
         const newName = prompt("Enter new task name", task.name);
         const newDescription = prompt(
@@ -56,7 +56,7 @@ const ManageTasks: React.FC = () => {
       }
       return task;
     });
-    setTasks(updatedTasks);
+    setVideos(updatedTasks);
   };
 
   return loading ? (
@@ -78,7 +78,7 @@ const ManageTasks: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {tasks.map((task) => (
+            {videos.map((task) => (
               <tr key={task.id} className="border-b border-gray-700">
                 <td className="px-4 py-2">{task.id}</td>
                 <td className="px-4 py-2">{task.name}</td>
@@ -106,4 +106,4 @@ const ManageTasks: React.FC = () => {
   );
 };
 
-export default ManageTasks;
+export default ManageVideo;

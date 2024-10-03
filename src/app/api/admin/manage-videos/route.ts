@@ -9,14 +9,13 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const {
-      page,
-      pageSize,
-    }: {
-      page: number;
-      pageSize: number;
-    } = await request.json();
-    const offset = (page - 1) * pageSize;
+    // const {
+    //   page,
+    //   pageSize,
+    // }: {
+    //   page: number;
+    //   pageSize: number;
+    // } = await request.json();
     const totalUsers = await db
       .select()
       .from(videos);
