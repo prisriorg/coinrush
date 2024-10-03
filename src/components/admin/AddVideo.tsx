@@ -2,47 +2,47 @@
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-const AddTask: React.FC = () => {
-  const [taskName, setTaskName] = useState("");
-  const [taskCoin, setTaskCoin] = useState(0);
+const AddVideo: React.FC = () => {
+  const [videoLink, setVideoLink] = useState("");
+  const [videoCoin, setVideoCoin] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [taskLink, setTaskLink] = useState("");
-  const [taskPlatform, setTaskPlatform] = useState("");
+  const [videoCode, setVideoCode] = useState(0);
   const [error, setError] = useState("");
 
+  
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setError("");
-    if (!taskPlatform || !taskName || !taskCoin || !taskLink) {
+    if (!videoLink || !videoCoin || !videoCode) {
       setError("All required");
       return;
     }
-    const response = await fetch("/api/admin/addtask", {
+    const response = await fetch("/api/admin/addvideo", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ taskPlatform, taskName, taskCoin, taskLink }),
+      body: JSON.stringify({ videoLink, videoCoin, videoCode }),
     });
     const data: any = await response.json();
     if (data.error) {
       setError(data.error);
     } else if (data.message) {
-      router.push("/admin/manage-task");
+      router.push("/admin/manage-videos");
     }
-    setTaskName("");
-    setTaskCoin(0);
-    setTaskLink("");
+    setVideoLink("");
+    setVideoCoin(0);
+    setVideoCode(0);
     setLoading(false);
   };
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-6">
       <div className="max-w-md mx-auto">
-        <h1 className="text-3xl font-bold mb-8 text-center">Add Task</h1>
+        <h1 className="text-3xl font-bold mb-8 text-center">Add Video</h1>
         <form
           onSubmit={handleSubmit}
           className="bg-gray-800 p-6 rounded-lg shadow-lg"
@@ -50,34 +50,16 @@ const AddTask: React.FC = () => {
           {error && <p className="text-red-500 mb-4">{error}</p>}
           <div className="mb-4">
             <label
-              htmlFor="taskName"
+              htmlFor="VideoLink"
               className="block text-sm font-semibold mb-2"
             >
-              Select Platform
-            </label>
-            <select
-              id="dark-select"
-              onChange={(e) => setTaskPlatform(e.target.value)}
-              className="block appearance-none w-full bg-gray-800 border border-gray-600 text-gray-200 hover:border-blue-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-              <option value="youtube-subscribe">Youtube Subscribe</option>
-              <option value="youtube-like">Youtube Like</option>
-              <option value="youtube-comment">Youtube Comment</option>
-            </select>
-          </div>
-
-          <div className="mb-4">
-            <label
-              htmlFor="taskName"
-              className="block text-sm font-semibold mb-2"
-            >
-              Task Name
+              Video Link
             </label>
             <input
               type="text"
-              id="taskName"
-              value={taskName}
-              onChange={(e) => setTaskName(e.target.value)}
+              id="VideoLink"
+              value={videoLink}
+              onChange={(e) => setVideoLink(e.target.value)}
               className="w-full p-2 bg-gray-700 rounded focus:outline-none focus:ring focus:ring-blue-500"
               placeholder="Enter task name"
               required
@@ -86,16 +68,16 @@ const AddTask: React.FC = () => {
 
           <div className="mb-4">
             <label
-              htmlFor="taskCoins"
+              htmlFor="videoCoins"
               className="block text-sm font-semibold mb-2"
             >
-              Task Coin
+              Video Coin
             </label>
             <input
               type="number"
-              id="TaskCoins"
-              value={taskCoin}
-              onChange={(e) => setTaskCoin(parseInt(e.target.value))}
+              id="videokCoins"
+              value={videoCoin}
+              onChange={(e) => setVideoCoin(parseInt(e.target.value))}
               className="w-full p-2 bg-gray-700 rounded focus:outline-none focus:ring focus:ring-blue-500"
               placeholder="Enter task Coin"
               required
@@ -103,16 +85,16 @@ const AddTask: React.FC = () => {
           </div>
           <div className="mb-4">
             <label
-              htmlFor="taskLink"
+              htmlFor="Videocode"
               className="block text-sm font-semibold mb-2"
             >
-              Task Link
+              Video Code
             </label>
             <input
-              type="text"
-              id="taskLink"
-              value={taskLink}
-              onChange={(e) => setTaskLink(e.target.value)}
+              type="number"
+              id="Videocode"
+              value={videoCode}
+              onChange={(e) => setVideoCode(parseInt(e.target.value))}
               className="w-full p-2 bg-gray-700 rounded focus:outline-none focus:ring focus:ring-blue-500"
               placeholder="Enter task Link"
               required
@@ -123,7 +105,7 @@ const AddTask: React.FC = () => {
             disabled={loading}
             className="w-full bg-blue-600 hover:bg-blue-500 text-white font-semibold py-2 rounded"
           >
-            {loading ? "Adding" : "Add Task"}
+            {loading ? "Adding" : "Add Video"}
           </button>
         </form>
       </div>
@@ -131,4 +113,4 @@ const AddTask: React.FC = () => {
   );
 };
 
-export default AddTask;
+export default AddVideo;

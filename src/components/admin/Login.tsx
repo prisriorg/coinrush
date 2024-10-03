@@ -12,15 +12,10 @@ const Login: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     setError("");
-
-    // Mock validation (you can replace this with your authentication logic)
     if (!email || !password) {
       setError("Email and password are required.");
       return;
     }
-
-    // Replace this with actual login logic
-    // For example, you could use an API call to authenticate the user
     const response = await fetch("/api/admin/login", {
       method: "POST",
       headers: {
@@ -38,10 +33,7 @@ const Login: React.FC = () => {
       setPassword("");
       router.push("/admin/dashboard");
     }
-
-    // Perform actual login logic here (e.g., API call)
-    // Reset the form after login
-
+    
     setLoading(false);
   };
 

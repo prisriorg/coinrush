@@ -15,7 +15,7 @@ const Dashboard = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ chat_id: parseInt("654645") }),
+      body: JSON.stringify({ token: parseInt("654645") }),
     })
       .then((response) => response.json())
       .then((data: any) => {
