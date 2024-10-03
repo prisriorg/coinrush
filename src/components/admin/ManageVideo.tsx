@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react";
 // Mock Task Interface
 interface Task {
   id: number;
-  name: string;
-  description: string;
+  videoId: string;
+  coins: number;
+  code: number;
 }
 
 const ManageVideo: React.FC = () => {
@@ -37,23 +38,40 @@ const ManageVideo: React.FC = () => {
   };
   // Function to handle deleting a task
   const handleDelete = (id: number) => {
-    const updatedTasks = videos.filter((task) => task.id !== id);
-    setVideos(updatedTasks);
+    setLoading(true);
+    fetch("/api/admin/delete-videos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data: any) => {
+        setLoading(false);
+        const updatedTasks = videos.filter((task) => task.id !== id);
+        setVideos(updatedTasks);
+      })
+      .catch((error) => {
+        console.error("Error fetching history:", error);
+      });
   };
 
   // Function to handle editing a task (mocked)
   const handleEdit = (id: number) => {
     const updatedTasks = videos.map((task) => {
-      if (task.id === id) {
-        const newName = prompt("Enter new task name", task.name);
-        const newDescription = prompt(
-          "Enter new task description",
-          task.description
-        );
-        if (newName && newDescription) {
-          return { ...task, name: newName, description: newDescription };
-        }
-      }
+      // if (task.id === id) {
+      //   const newName = prompt("Enter new task name", task.name);
+      //   const newDescription = prompt(
+      //     "Enter new task description",
+      //     task.description
+      //   );
+      //   if (newName && newDescription) {
+      //     return { ...task, name: newName, description: newDescription };
+      //   }
+      // }
       return task;
     });
     setVideos(updatedTasks);
@@ -72,8 +90,9 @@ const ManageVideo: React.FC = () => {
           <thead>
             <tr className="bg-gray-700">
               <th className="px-4 py-2 text-left">ID</th>
-              <th className="px-4 py-2 text-left">Task Name</th>
-              <th className="px-4 py-2 text-left">Description</th>
+              <th className="px-4 py-2 text-left">Url</th>
+              <th className="px-4 py-2 text-left">Coin</th>
+              <th className="px-4 py-2 text-left">Code</th>
               <th className="px-4 py-2 text-left">Actions</th>
             </tr>
           </thead>
@@ -81,8 +100,10 @@ const ManageVideo: React.FC = () => {
             {videos.map((task) => (
               <tr key={task.id} className="border-b border-gray-700">
                 <td className="px-4 py-2">{task.id}</td>
-                <td className="px-4 py-2">{task.name}</td>
-                <td className="px-4 py-2">{task.description}</td>
+                <td className="px-4 py-2">{task.videoId}</td>
+                <td className="px-4 py-2">{task.coins}</td>
+
+                <td className="px-4 py-2">{task.code}</td>
                 <td className="px-4 py-2">
                   {/* <button
                     onClick={() => handleEdit(task.id)}

@@ -54,12 +54,12 @@ const WatchAndEarn = (props: { id: string }) => {
 
   return (
     <>
-      <div className="my-6 flex justify-start items-start gap-4">
+      <div className="my-6 ">
         <button
-          className={`${
+          className={`w-full mb-2 ${
             selectedIs === "task"
               ? "bg-blue-500 hover:bg-blue-600 active:scale-95"
-              : "bg-gray-700 hover:bg-blue-600 active:scale-95"
+              : "bg-gray-900 hover:bg-blue-600 active:scale-95"
           } transition-transform duration-150 ease-in-out px-4 py-2 rounded-full shadow-md`}
           onClick={() => setSelectedIs("task")}
         >
@@ -67,10 +67,10 @@ const WatchAndEarn = (props: { id: string }) => {
         </button>
 
         <button
-          className={`${
+          className={`w-full mb-2 ${
             selectedIs === "video"
               ? "bg-blue-500 hover:bg-blue-600 active:scale-95"
-              : "bg-gray-700 hover:bg-blue-600 active:scale-95"
+              : "bg-gray-900 hover:bg-blue-600 active:scale-95"
           } transition-transform duration-150 ease-in-out px-4 py-2 rounded-full shadow-md`}
           onClick={() => setSelectedIs("video")}
         >
@@ -78,10 +78,10 @@ const WatchAndEarn = (props: { id: string }) => {
         </button>
 
         <button
-          className={`${
+          className={`w-full mb-2 ${
             selectedIs === "games"
               ? "bg-blue-500 hover:bg-blue-600 active:scale-95"
-              : "bg-gray-700 hover:bg-blue-600 active:scale-95"
+              : "bg-gray-900 hover:bg-blue-600 active:scale-95"
           } transition-transform duration-150 ease-in-out px-4 py-2 rounded-full shadow-md`}
           onClick={() => setSelectedIs("games")}
         >
