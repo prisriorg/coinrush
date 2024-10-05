@@ -88,9 +88,11 @@ export type InsertTaskDone = typeof taskDone.$inferInsert
 
 export const games = sqliteTable('games', {
   id: integer('id').primaryKey(),
-  gameId: text('game_id').notNull(),
+  gameUrl: text('game_url').notNull(),
+  gameImage: text('game_image').notNull(),
+  gameName: text('game_name').notNull(),
   coins: integer('coins').notNull().default(0),
-  code: integer('code').notNull(),
+  code: integer('code').notNull().default(0),
   createdAt: text("created_at")
     .default(sql`(CURRENT_TIMESTAMP)`)
     .notNull(),

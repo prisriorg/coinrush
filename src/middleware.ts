@@ -15,7 +15,7 @@ export async function middleware(req: Request) {
     .from(requests)
     .where(eq(requests.month, monthYear));
 
-  if (existingRecord.length > 0 && existingRecord[0].request !== null) {
+  if (existingRecord.length > 0 && existingRecord[0].request) {
     // If record exists and request is not null, increment the request count
     await db
       .update(requests)

@@ -1,0 +1,48 @@
+-- DROP TABLE IF EXISTS history;
+-- DROP TABLE IF EXISTS ;
+-- INSERT INTO setting (
+--     id,
+--     refer1,
+--     refer2,
+--     refer3,
+--     plan_id,
+--     admin,
+--     password
+--   )
+-- VALUES (
+--     1,
+--     3,
+--     2,
+--     1,
+--     1,
+--     'admin',
+--     'password'
+--   );
+
+-- INSERT INTO plans (id, requests, price)
+-- VALUES (
+--     1,
+--     30000,
+--     5
+--   ),(
+--     2,
+--     50000,
+--     9
+--   ),(
+--     3,
+--     75000,
+--     13
+--   ),(
+--     4,
+--     100000,
+--     17
+--   ),(
+--     5,
+--     250000,
+--     25
+--   ),(
+--     6,
+--     1000000,
+--     50
+--   );
+Delete from requests where id=2

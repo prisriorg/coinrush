@@ -3,8 +3,8 @@
         {
             "previewLimit": 50,
             "driver": "SQLite",
-            "name": "dg",
-            "database": "${workspaceFolder:nextjs-coinrush}/.wrangler/state/v3/d1/miniflare-D1DatabaseObject/c5979c6c6f6f0fb059f6083e25eb5e93700304375ee4eabc4092958ef405e24a.sqlite"
+            "database": "${workspaceFolder:nextjs-coinrush}/.wrangler/state/v3/d1/miniflare-D1DatabaseObject/c5979c6c6f6f0fb059f6083e25eb5e93700304375ee4eabc4092958ef405e24a.sqlite",
+            "name": "ygfww"
         }
     ]
 }

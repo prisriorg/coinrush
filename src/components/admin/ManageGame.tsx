@@ -1,24 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
-// Mock Task Interface
-interface Task {
-  id: number;
-  platform: string,
-  name: string,
-  coins: number,
-  link: string,
-}
-
-const ManageTasks: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+const ManageGame: React.FC = () => {
+  const [tasks, setTasks] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     addData();
   }, []);
   const addData = () => {
     setLoading(true);
-    fetch("/api/admin/manage-task", {
+    fetch("/api/admin/manage-game", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +30,7 @@ const ManageTasks: React.FC = () => {
   // Function to handle deleting a task
   const handleDelete = (id: number) => {
     setLoading(true);
-    fetch("/api/admin/delete-task", {
+    fetch("/api/admin/delete-game", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -90,9 +81,7 @@ const ManageTasks: React.FC = () => {
           <thead>
             <tr className="bg-gray-700">
               <th className="px-4 py-2 text-left">ID</th>
-              <th className="px-4 py-2 text-left">Task Name</th>
-              <th className="px-4 py-2 text-left">Coin</th>
-              <th className="px-4 py-2 text-left">Link</th>
+              <th className="px-4 py-2 text-left">Game Name</th>
               <th className="px-4 py-2 text-left">Actions</th>
             </tr>
           </thead>
@@ -100,9 +89,7 @@ const ManageTasks: React.FC = () => {
             {tasks.map((task) => (
               <tr key={task.id} className="border-b border-gray-700">
                 <td className="px-4 py-2">{task.id}</td>
-                <td className="px-4 py-2">{task.name}</td>
-                <td className="px-4 py-2">{task.coins}</td>
-                <td className="px-4 py-2">{task.link}</td>
+                <td className="px-4 py-2">{task.gameName}</td>
                 <td className="px-4 py-2">
                   <button
                     onClick={() => handleDelete(task.id)}
@@ -120,4 +107,4 @@ const ManageTasks: React.FC = () => {
   );
 };
 
-export default ManageTasks;
+export default ManageGame;

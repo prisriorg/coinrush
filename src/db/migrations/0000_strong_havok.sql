@@ -1,8 +1,10 @@
 CREATE TABLE `games` (
 	`id` integer PRIMARY KEY NOT NULL,
-	`game_id` text NOT NULL,
+	`game_url` text NOT NULL,
+	`game_image` text NOT NULL,
+	`game_name` text NOT NULL,
 	`coins` integer DEFAULT 0 NOT NULL,
-	`code` integer NOT NULL,
+	`code` integer DEFAULT 0 NOT NULL,
 	`created_at` text DEFAULT (CURRENT_TIMESTAMP) NOT NULL,
 	`updated_at` integer
 );
@@ -21,6 +23,14 @@ CREATE TABLE `plans` (
 	`id` integer PRIMARY KEY NOT NULL,
 	`requests` integer DEFAULT 0,
 	`price` integer DEFAULT 0,
+	`created_at` text DEFAULT (CURRENT_TIMESTAMP) NOT NULL,
+	`updated_at` integer
+);
+--> statement-breakpoint
+CREATE TABLE `requests` (
+	`id` integer PRIMARY KEY NOT NULL,
+	`month` text,
+	`request` integer,
 	`created_at` text DEFAULT (CURRENT_TIMESTAMP) NOT NULL,
 	`updated_at` integer
 );
@@ -91,6 +101,7 @@ CREATE TABLE `withdwaral` (
 	`method` text,
 	`address` text,
 	`chat_id` integer,
+	`status` integer,
 	`created_at` text DEFAULT (CURRENT_TIMESTAMP) NOT NULL,
 	`updated_at` integer
 );
