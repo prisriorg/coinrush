@@ -60,9 +60,14 @@ const AddTask: React.FC = () => {
               onChange={(e) => setTaskPlatform(e.target.value)}
               className="block appearance-none w-full bg-gray-800 border border-gray-600 text-gray-200 hover:border-blue-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             >
-              <option value="youtube-subscribe">Youtube Subscribe</option>
-              <option value="youtube-like">Youtube Like</option>
-              <option value="youtube-comment">Youtube Comment</option>
+              <option value="Youtube Subscribe">Youtube Subscribe</option>
+              <option value="Youtube Like">Youtube Like</option>
+              <option value="Youtube Comment">Youtube Comment</option>
+              <option value="Instagram Follow">Instagram Follow</option>
+              <option value="Instagram Like">Instagram Like</option>
+              <option value="Instagram Comment">Instagram Comment</option>
+              <option value="Telegram">Telegram</option>
+              <option value="Others">Others</option>
             </select>
           </div>
 

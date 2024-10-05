@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import YoutubeIcon from "@/icons/YoutubeIcon";
 import SubmitCheckIcon from "@/icons/SubmitCheckIcon";
 import Loading from "./Loading";
+import InstagramIcon from "@/icons/InstagramIcon";
+import TelegramIcon from "@/icons/TelegramIcon";
+import OthersIcon from "@/icons/OthersIcon";
 
 const WatchAndEarn = (props: { id: string }) => {
   const [videoList, setVideoList] = useState<any[]>();
@@ -117,8 +120,7 @@ const WatchAndEarn = (props: { id: string }) => {
             <div className="grid grid-cols-2 gap-4">
               {gamesData?.length === 0 ? (
                 <div className="flex justify-center items-center">
-                  {" "}
-                  No More Task{" "}
+                  No More Task
                 </div>
               ) : (
                 gamesData?.map((game) => (
@@ -134,9 +136,6 @@ const WatchAndEarn = (props: { id: string }) => {
                     />
                     <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 transition-opacity duration-300 hover:opacity-100"></div>
                     <h4 className="text-lg font-bold z-10">{game.gameName}</h4>
-                    {/* <p className="text-gray-400 text-center z-10">
-                      {game.description}
-                    </p> */}
                   </a>
                 ))
               )}
@@ -232,17 +231,37 @@ const WatchAndEarn = (props: { id: string }) => {
                 tasksData?.map((task, index) => (
                   <div
                     key={task.id}
-                    className="bg-gray-800 p-4 rounded-lg shadow-md flex flex-col items-center transition-transform transform hover:scale-105 hover:shadow-xl relative overflow-hidden"
+                    className="bg-gray-800 p-4 mb-4 rounded-lg shadow-md flex flex-col items-center transition-transform transform hover:scale-105 hover:shadow-xl relative overflow-hidden"
                   >
                     <h2 className="text-lg font-semibold text-gray-100 mb-2">
                       Task {task.id}
                     </h2>
-                    <div className=" bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg mb-4">
-                      <YoutubeIcon className="" />
-                      {task.platform.toString().split("-")[1][0].toUpperCase() +
-                        task.platform.toString().split("-")[1].slice(1)}
+                    <div
+                      className={`${
+                        task.platform.toString().split(" ")[0] == "Instagram"
+                          ? "bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 hover:from-pink-600 hover:via-red-600 hover:to-yellow-600 w-30"
+                          : task.platform.toString().split(" ")[0] == "Telegram"
+                          ? "bg-blue-500 hover:bg-blue-700"
+                          : "bg-red-500 hover:bg-red-700"
+                      } min-w-32 text-white text-center font-bold py-2 px-4 rounded-lg mb-4`}
+                    >
+                      {task.platform.toString().split(" ")[0] ===
+                      "Instagram" ? (
+                        <InstagramIcon className="" />
+                      ) : task.platform.toString().split(" ")[0] ===
+                        "Youtube" ? (
+                        <YoutubeIcon className="" />
+                      ) : task.platform.toString().split(" ")[0] ===
+                        "Telegram" ? (
+                        <TelegramIcon className="" />
+                      ) : (
+                        <OthersIcon className="" />
+                      )}
+                      {task.platform.toString().split(" ")[0] === "Instagram" ||
+                      task.platform.toString().split(" ")[0] === "Youtube"
+                        ? task.platform.toString().split(" ")[1]
+                        : task.platform.toString().split(" ")[0]}
                     </div>
-
                     {selectedVideoId === task.id && (
                       <div className="mt-4 w-full">
                         <h2 className="text-lg font-semibold text-gray-100 mb-2">
