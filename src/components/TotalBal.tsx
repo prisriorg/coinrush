@@ -2,7 +2,7 @@
 import CoinIcon from "@/icons/CoinIcon";
 import React from "react";
 
-const TotalBal = (props: { coin: number; refer: number }) => {
+const TotalBal = (props: { coin: string; refer: string }) => {
   return (
     <div className="w-full max-w-md bg-gray-900 p-6 rounded-xl shadow-md">
       <h2 className="text-center text-3xl font-bold flex justify-center items-center">

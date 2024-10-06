@@ -19,9 +19,8 @@ export async function middleware(req: Request) {
     // If record exists and request is not null, increment the request count
     await db
       .update(requests)
-      .set({ request: (existingRecord[0].request ?? 0) + 5 })
+      .set({ request: (existingRecord[0].request ?? 0) + 3 })
       .where(eq(requests.month, monthYear))
-      .execute();
   } else {
     // If no record for the current month, insert a new one with request count set to 1
     await db
@@ -30,7 +29,6 @@ export async function middleware(req: Request) {
         month: monthYear,
         request: 1,
       })
-      .execute();
   }
   return NextResponse.next();
 }

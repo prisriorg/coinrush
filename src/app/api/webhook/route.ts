@@ -60,11 +60,10 @@ export async function POST(request: NextRequest) {
         const parts = text.split(' ')
         if (parts.length > 1) {
           const number = parts[1]
-          if (isNumber(number)) {
-            await onStart(chatId, number)
-          }
-        } 
-        await onStart(chatId, 0)
+          await onStart(chatId, number)
+        } else{
+          await onStart(chatId, 0)
+        }
       }
     } else if (params === 'callback_query') {
       const chatId = update.message?.chat.id

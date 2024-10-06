@@ -32,7 +32,7 @@ const Wallet = (props: { id: string }) => {
   }, []);
   return (
     <>
-      <TotalBal coin={balance} refer={referBal} />
+      <TotalBal coin={balance.toFixed(2)} refer={referBal.toFixed(2)} />
       <div className="mt-6 flex justify-center gap-4">
         <button
           className={`${
@@ -63,21 +63,21 @@ const Wallet = (props: { id: string }) => {
           <span className="text-gray-400">Level 1</span>
           <span className="flex  text-green-400">
             <CoinIcon className="w-4 mr-2" />
-            {level1Bal}
+            {level1Bal.toFixed(2)}
           </span>
         </div>
         <div className="flex justify-between items-center py-2 border-b-2 border-gray-700">
           <span className="text-gray-400">Level 2</span>
           <span className="flex  text-green-400">
             <CoinIcon className="w-4 mr-2" />
-            {level2Bal}
+            {level2Bal.toFixed(2)}
           </span>
         </div>
         <div className="flex justify-between items-center py-2">
           <span className="text-gray-400">Level 3</span>
           <span className="flex text-green-400">
             <CoinIcon className="w-4 mr-2" />
-            {level3Bal}
+            {level3Bal.toFixed(2)}
           </span>
         </div>
       </div>

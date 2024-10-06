@@ -70,11 +70,11 @@ const UserList: React.FC = () => {
                 <td className="px-4 py-2">{user.id}</td>
                 <td className="px-4 py-2">{user.chatId}</td>
                 <td className="px-4 py-2">
-                  {user.coins +
+                  {(user.coins +
                     user.level1 +
                     user.level2 +
                     user.level3 -
-                    user.withdraw}
+                    user.withdraw).toFixed(2)}
                 </td>
                 <td className="px-4 py-2">{user.createdAt}</td>
               </tr>
