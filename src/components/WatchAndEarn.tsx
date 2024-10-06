@@ -11,12 +11,16 @@ const WatchAndEarn = (props: { id: string }) => {
   const [videoList, setVideoList] = useState<any[]>();
   const [gamesData, setGamesData] = useState<any[]>();
   const [tasksData, setTasksData] = useState<any[]>();
+  const [file, setFile] = useState<File | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [success, setSuccess] = useState<string>("100");
+  const [success, setSuccess] = useState<string>("");
   const [selectedVideoId, setSelectedVideoId] = useState<number | null>(null);
   const [enteredCode, setEnteredCode] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [tasksuccess, setTaskSuccess] = useState<string>("");
+  const [taskerror, setTaskError] = useState<string>("");
   const [selectedIs, setSelectedIs] = useState<string>("task");
+  const [uplo, setUplo] = useState(false);
   useEffect(() => {
     fetch("/api/home", {
       method: "POST",
@@ -43,12 +47,49 @@ const WatchAndEarn = (props: { id: string }) => {
     } else {
       setSelectedVideoId(videoId);
       setEnteredCode("");
+      setFile(null);
       setError("");
+      setTaskSuccess("");
+      setTaskError("");
+      setUplo(false)
     }
   };
-
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+    }
+  };
+  const handleSubmitScreenShot = (video: any) => {
+    setUplo(true)
+    const formData = new FormData();
+    if(file){
+      formData.append("file", file);
+      formData.append("videoid", video.id.toString());
+      formData.append("videolink", video.link.toString());
+      formData.append("videoname", video.name.toString());
+      formData.append("chatId", props.id.toString())
+      fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data: any) => {
+          if (data.success) {
+            setTaskSuccess(data.success);
+          } else if (data.error) {
+            setTaskError(data.error);
+          }
+        })
+        .catch((error) => {
+          setTaskError("Error Uploading");
+        });
+    }
+    
+  };
   const handleSubmitCode = (video: any) => {
     if (parseInt(enteredCode) === video.code) {
+
       fetch("/api/verify-video", {
         method: "POST",
         headers: {
@@ -63,9 +104,11 @@ const WatchAndEarn = (props: { id: string }) => {
         .then((response) => response.json())
         .then((data: any) => {
           if (data.success) {
+
             setSuccess("Coins received");
           } else if (data.error) {
             setError(data.error);
+
           }
         })
         .catch((error) => {
@@ -80,40 +123,40 @@ const WatchAndEarn = (props: { id: string }) => {
     <>
       <div className="my-6 ">
         <button
-          className={`w-full mb-2 ${
+          className={`w-full text-xl font-bold mb-2 ${
             selectedIs === "task"
               ? "bg-blue-500 hover:bg-blue-600 active:scale-95"
               : "bg-gray-900 hover:bg-blue-600 active:scale-95"
-          } transition-transform duration-150 ease-in-out px-4 py-2 rounded-full shadow-md`}
+          } transition-transform duration-150 ease-in-out px-4 py-4 rounded-full shadow-md`}
           onClick={() => setSelectedIs("task")}
         >
           Task
         </button>
 
         <button
-          className={`w-full mb-2 ${
+          className={`w-full text-xl font-bold mb-2 ${
             selectedIs === "video"
               ? "bg-blue-500 hover:bg-blue-600 active:scale-95"
               : "bg-gray-900 hover:bg-blue-600 active:scale-95"
-          } transition-transform duration-150 ease-in-out px-4 py-2 rounded-full shadow-md`}
+          } transition-transform duration-150 ease-in-out px-4 py-4 rounded-full shadow-md`}
           onClick={() => setSelectedIs("video")}
         >
           Watch
         </button>
 
         <button
-          className={`w-full mb-2 ${
+          className={`w-full text-xl font-bold mb-2 ${
             selectedIs === "games"
               ? "bg-blue-500 hover:bg-blue-600 active:scale-95"
               : "bg-gray-900 hover:bg-blue-600 active:scale-95"
-          } transition-transform duration-150 ease-in-out px-4 py-2 rounded-full shadow-md`}
+          } transition-transform duration-150 ease-in-out px-4 py-4 rounded-full shadow-md`}
           onClick={() => setSelectedIs("games")}
         >
           Games
         </button>
       </div>
       {selectedIs === "games" ? (
-        <div className="w-full max-w-md">
+        <div className="w-full text-xl font-bold max-w-md">
           {loading ? (
             <Loading />
           ) : (
@@ -223,12 +266,9 @@ const WatchAndEarn = (props: { id: string }) => {
           ) : (
             <div className="grid grid-cols-1">
               {tasksData?.length === 0 ? (
-                <div className="w-full flex justify-center items-center">
-                  {" "}
-                  No More Task{" "}
-                </div>
+                <div className="w-full flex justify-center items-center">No More Task</div>
               ) : (
-                tasksData?.map((task, index) => (
+                tasksData?.map((task) => (
                   <div
                     key={task.id}
                     className="bg-gray-800 p-4 mb-4 rounded-lg shadow-md flex flex-col items-center transition-transform transform hover:scale-105 hover:shadow-xl relative overflow-hidden"
@@ -281,21 +321,22 @@ const WatchAndEarn = (props: { id: string }) => {
                           <input
                             type="file"
                             id={`code-${task.id}`}
-                            value={enteredCode}
-                            onChange={(e) => setEnteredCode(e.target.value)}
+                            onChange={handleFileChange}
                             className="w-full p-3 bg-gray-700 text-white rounded-lg shadow-md  focus:border-transparent focus:outline-none"
                             placeholder="Enter code here..."
                           />
                         </div>
 
-                        {/* {error && <p className="text-red-500 mb-4">{error}</p>}
-                      {success && <p className="text-green-500 mb-4">{success}</p>} */}
-                        <button
-                          onClick={() => handleSubmitCode(task)}
+                        {taskerror && <p className="text-red-500 mb-4">{taskerror}</p>}
+                        {tasksuccess && (
+                          <p className="text-green-500 mb-4">{tasksuccess}</p>
+                        )}
+                        {uplo ?<></>: <button
+                          onClick={() => handleSubmitScreenShot(task)}
                           className="flex items-center justify-center bg-green-500 hover:bg-green-600 active:scale-95 transition-transform duration-150 ease-in-out text-white font-bold py-2 px-4 rounded-lg w-full"
                         >
                           <SubmitCheckIcon /> Submit Screenshort
-                        </button>
+                        </button>}
                       </div>
                     )}
 

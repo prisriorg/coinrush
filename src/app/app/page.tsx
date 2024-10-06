@@ -30,6 +30,7 @@ function getUserRows(user: User): DisplayDataRow[] {
 }
 export default function Home() {
   const [user, setUser] = useState<any[]>();
+  const [users, setUsers] = useState<any>()
   const [selectedTab, setSelectedTab] = useState("home");
   const initDataRaw = useLaunchParams().initDataRaw;
   const initData = useInitData();
@@ -93,25 +94,25 @@ export default function Home() {
     }
     var datat: any[] = [];
 
-    userRows?.map((value) => {
+    userRows.map((value) => {
       const title = value.title;
       const data = value.value;
       datat.push({ [title]: data });
     });
-    initDataRows?.map((value) => {
+    initDataRows.map((value) => {
       const title = value.title;
       const data = value.value;
       datat.push({ [title]: data });
     });
     setChatId(datat[0].id);
-    setUser(datat);
+    setUsers(datat);
     (async function initData() {
       const fata = await fetch(`api/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(datat[0]),
+        body: JSON.stringify(datat),
       });
       const data: any = await fata.json();
       setUser(data);

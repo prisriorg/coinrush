@@ -10,10 +10,11 @@ import ManageVideo from "./ManageVideo";
 import Plans from "./Plans";
 import Requests from "./Request";
 import UserList from "./UsersList";
+import Verification from "./Verification";
 
 const navData = [
   { name: "Login", link: "login", page: <Login/> },
-  { name: "Logout", link: "pagel", page: <></> },
+  { name: "Verification", link: "verification", page: <Verification/> },
   { name: "Page", link: "page", page: <></> },
   { name: "Dashboard", link: "dashboard", page: <Dashboard/> },
   { name: "Users", link: "users-list", page: <UserList/> },

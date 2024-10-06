@@ -37,9 +37,11 @@ const UserList: React.FC = () => {
     addData(currentPage);
   }, []);
   const handleNextPage = () => {
+    setCurrentPage(currentPage + 1)
     addData(currentPage + 1);
   };
   const handlePreviousPage = () => {
+    setCurrentPage(currentPage - 1)
     addData(currentPage - 1);
   };
 

@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { history, setting, tasks, users, videoDone, videos } from "@/db/schema";
+import { history, Setting, setting, tasks, users, videoDone, videos } from "@/db/schema";
 import { eq, and, sql } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 export const runtime = "edge";
@@ -44,9 +44,15 @@ export async function POST(request: NextRequest) {
       chatId: dtata.chat_id,
       name: "Video Watch",
       coin: task[0].coins,
-      status: 1,
+      status: 0,
     });
-    const refers = await db.select().from(setting).where(eq(setting.id, 1));
+    await db
+      .update(users)
+      .set({
+        coins: sql`${users.coins} + ${task[0].coins}`,
+      })
+      .where(eq(users.chatId, dtata.chat_id));
+    const refers:Setting[] = await db.select().from(setting).where(eq(setting.id, 1));
     const amount: number = task[0].coins;
     const refer1: number = refers[0].refer1 || 0;
     const refer2: number = refers[0].refer2 || 0;
@@ -54,44 +60,42 @@ export async function POST(request: NextRequest) {
     const refer1add: number = (amount * refer1) / 100;
     const refer2add: number = (amount * refer2) / 100;
     const refer3add: number = (amount * refer3) / 100;
-    let level1 = await db
-      .select()
-      .from(users)
-      .where(eq(users.chatId, dtata.chat_id));
-    if (level1.length !== 0) {
-      await db
-        .update(users)
-        .set({
-          level1: sql`${users.level1} + ${refer1add}`,
-        })
-        .where(eq(users.chatId, dtata.chat_id)); // assuming you are updating by user ID
-
-      let level2 = await db
-        .select()
-        .from(users)
-        .where(eq(users.chatId, level1[0].refer));
-      if (level2.length !== 0) {
+    // Check if user has referred before and update their level accordingly.
+    let level1KaRefer =
+        (await db.select().from(users).where(eq(users.chatId, chat_id))).at(0)
+          ?.refer || 0;
+      let level2KaRefer =
+        (
+          await db.select().from(users).where(eq(users.chatId, level1KaRefer))
+        ).at(0)?.refer || 0;
+      let level3karefer =
+        (
+          await db.select().from(users).where(eq(users.chatId, level2KaRefer))
+        ).at(0)?.refer || 0;
+      if (level1KaRefer !== 0) {
+        await db
+          .update(users)
+          .set({
+            level1: sql`${users.level1} + ${refer1add}`,
+          })
+          .where(eq(users.chatId, level1KaRefer));
+      }
+      if (level2KaRefer!== 0) {
         await db
           .update(users)
           .set({
             level2: sql`${users.level2} + ${refer2add}`,
           })
-          .where(eq(users.chatId, level2[0].refer)); // assuming you are updating by user ID
-        let level3 = await db
-          .select()
-          .from(users)
-          .where(eq(users.chatId, dtata.chat_id));
-
-        if (level3.length !== 0) {
-          await db
-            .update(users)
-            .set({
-              level3: sql`${users.level3} + ${refer3add}`,
-            })
-            .where(eq(users.chatId, level3[0].refer));
-        }
+          .where(eq(users.chatId, level2KaRefer));
       }
-    }
+      if (level3karefer!== 0) {
+        await db
+          .update(users)
+          .set({
+            level3: sql`${users.level3} + ${refer3add}`,
+          })
+          .where(eq(users.chatId, level3karefer));
+      }
     // Update user's coins and return success response.
 
     // Validate code against user's code and return success response.
