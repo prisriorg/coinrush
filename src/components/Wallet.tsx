@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import CoinIcon from "@/icons/CoinIcon";
 import TotalBal from "./TotalBal";
 import History from "./History";
+import Withdrawal from "./Withdrawal";
 const Wallet = (props: { id: string }) => {
-  const [selectedIs, setSelectedIs] = useState<string>("Withdrawal");
+  const [selectedIs, setSelectedIs] = useState<string>("");
   const [referBal, setReferBal] = useState(0);
   const [balance, setBalance] = useState(0);
   const [level1Bal, setLevel1Bal] = useState(0);
@@ -30,7 +31,9 @@ const Wallet = (props: { id: string }) => {
         console.error("Error fetching history:", error);
       });
   }, []);
-  return (
+  return selectedIs === "Withdrawal" ? (
+    <Withdrawal id={props.id} coin={balance.toFixed(2)} />
+  ) : (
     <>
       <TotalBal coin={balance.toFixed(2)} refer={referBal.toFixed(2)} />
       <div className="mt-6 flex justify-center gap-4">
@@ -55,29 +58,27 @@ const Wallet = (props: { id: string }) => {
           Check In
         </button>
       </div>
-
-      {/* Asset List */}
       <div className="mt-8 w-full max-w-md bg-gray-800 p-4 rounded-xl shadow-md">
         <h3 className="text-lg font-bold pb-2">Refer Earning</h3>
         <div className="flex justify-between items-center py-2 border-b-2 border-gray-700">
           <span className="text-gray-400">Level 1</span>
           <span className="flex  text-green-400">
             <CoinIcon className="w-4 mr-2" />
-            {level1Bal.toFixed(2)}
+            {level1Bal.toFixed(0)}
           </span>
         </div>
         <div className="flex justify-between items-center py-2 border-b-2 border-gray-700">
           <span className="text-gray-400">Level 2</span>
           <span className="flex  text-green-400">
             <CoinIcon className="w-4 mr-2" />
-            {level2Bal.toFixed(2)}
+            {level2Bal.toFixed(0)}
           </span>
         </div>
         <div className="flex justify-between items-center py-2">
           <span className="text-gray-400">Level 3</span>
           <span className="flex text-green-400">
             <CoinIcon className="w-4 mr-2" />
-            {level3Bal.toFixed(2)}
+            {level3Bal.toFixed(0)}
           </span>
         </div>
       </div>

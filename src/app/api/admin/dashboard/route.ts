@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { users } from "@/db/schema";
+import { taskDone, tasks, users, videoDone } from "@/db/schema";
 import { sql } from "drizzle-orm";
 import { NextResponse, type NextRequest } from "next/server";
 export const runtime = "edge";
@@ -38,15 +38,18 @@ export async function POST(request: NextRequest) {
       .select()
       .from(users)
       .where(sql`${users.createdAt} >= ${twentyEightDaysAgo.toISOString()}`);
-
+    // const tasksDone = await db.select().from(taskDone);
+    // const videosDone = await db.select().from(videoDone);
     // All-time users
     const allTimeUsers = await db.select().from(users);
 
     return {
-      users24Hr:users24Hr.length,
-      users7Days:users7Days.length,
+      users24Hr: users24Hr.length,
+      users7Days: users7Days.length,
       users28Days: users28Days.length,
-      allTimeUsers:allTimeUsers.length,
+      allTimeUsers: allTimeUsers.length,
+      // tasksDone: tasksDone.length,
+      // videosDone: videosDone.length,
     };
   }
   const data = await getUserStats();

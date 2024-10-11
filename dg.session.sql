@@ -45,4 +45,6 @@
 --     1000000,
 --     50
 --   );
-Delete from requests where id=2
+-- Delete from requests where id=2
+
+UPDATE users SET coins = 22345 WHERE id = 1;

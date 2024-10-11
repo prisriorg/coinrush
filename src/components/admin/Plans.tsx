@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 const SelectPlan: React.FC = () => {
   const [plansData, setPlansData] = useState<any[]>();
-  const [selectedPlan, setSelectedPlan] = useState<number>(1);
+  const [selectedPlan, setSelectedPlan] = useState<number>(5);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetch("/api/admin/plans", {

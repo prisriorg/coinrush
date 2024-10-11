@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { history } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { asc, desc, eq } from "drizzle-orm";
 import type { NextRequest } from "next/server";
 export const runtime = "edge";
 
@@ -23,6 +23,6 @@ export async function POST(request: NextRequest) {
     })
     .from(history)
     .where(eq(history.chatId, chat_id))
-    .limit(25);
+    .limit(25).orderBy(desc(history.id));
   return Response.json(histo);
 }

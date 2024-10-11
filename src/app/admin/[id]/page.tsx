@@ -12,7 +12,7 @@ const Admin = ({ params }: { params: { id: string } }) => {
     <main>
       <div className="main-background">
         {currentPage?.link == "login" ||
-        currentPage?.link == "signup" ||
+        currentPage?.link == "verification" ||
         currentPage?.link == "forget-password" ? (
           currentPage.page
         ) : (

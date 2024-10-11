@@ -30,7 +30,7 @@ function getUserRows(user: User): DisplayDataRow[] {
 }
 export default function Home() {
   const [user, setUser] = useState<any[]>();
-  const [users, setUsers] = useState<any>()
+  const [users, setUsers] = useState<any>();
   const [selectedTab, setSelectedTab] = useState("home");
   const initDataRaw = useLaunchParams().initDataRaw;
   const initData = useInitData();
@@ -152,7 +152,7 @@ export default function Home() {
     );
   }
   return (
-    <AppRoot appearance="dark" platform="base" >
+    <AppRoot appearance="dark" platform="base">
       <div className="pb-24 text-white">
         <div className=" min-h-screen m-4">{renderContent()}</div>
         <Tabbar className="bg-black">

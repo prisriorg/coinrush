@@ -11,6 +11,7 @@ import Plans from "./Plans";
 import Requests from "./Request";
 import UserList from "./UsersList";
 import Verification from "./Verification";
+import WithdrawList from "./WithdrawList";
 
 const navData = [
   { name: "Login", link: "login", page: <Login/> },
@@ -24,6 +25,7 @@ const navData = [
   { name: "Manage videos", link: "manage-videos", page: <ManageVideo/> },
   { name: "Add Games", link: "add-games", page: <AddGame/> },
   { name: "Manage Games", link: "manage-games", page: <ManageGame/> },
+  { name: "Withdraw", link: "withdraw", page: <WithdrawList/> },
   { name: "Requests", link: "requests", page: <Requests/> },
   { name: "Plans", link: "plans", page: <Plans/> },
   { name: "Logout", link: "logout", page: <Logout/> },
